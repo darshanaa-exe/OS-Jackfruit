@@ -144,7 +144,8 @@ make clean
 
 Two containers (`alpha` and `beta`) launched under a single supervisor process. The supervisor terminal on the left confirms both containers started and shows their host PIDs.
 
-![Multi-container supervision](1.png)
+<img width="2159" height="352" alt="1" src="https://github.com/user-attachments/assets/758315ee-1802-46c5-8222-e09a4093bbf7" />
+
 
 ---
 
@@ -152,7 +153,8 @@ Two containers (`alpha` and `beta`) launched under a single supervisor process. 
 
 Output of `engine ps` showing three tracked containers (`alpha`, `beta`, `gamma`) with their PID, state, start time, and configured soft/hard memory limits in MiB.
 
-![Metadata tracking via ps](2.png)
+<img width="1525" height="244" alt="2" src="https://github.com/user-attachments/assets/32cce7cd-9a93-4f54-bd1e-dfe28668cc99" />
+
 
 ---
 
@@ -160,11 +162,13 @@ Output of `engine ps` showing three tracked containers (`alpha`, `beta`, `gamma`
 
 The supervisor terminal (left) shows `[PRODUCER]`, `[BUFFER PUSH]`, and `[CONSUMER]` trace lines confirming that log data moves through the bounded buffer. The client terminal (right) shows `engine logs log-demo` reading the captured output, and `ls -l logs/log-demo.log` confirming the file was written to disk.
 
-![Bounded-buffer pipeline activity](3-2.png)
+<img width="2155" height="836" alt="3-2" src="https://github.com/user-attachments/assets/7830f278-d332-4473-834d-cf5042cf970c" />
+
 
 `engine logs` output showing timestamped lines from the container:
 
-![Logs output](3.png)
+<img width="1777" height="286" alt="3" src="https://github.com/user-attachments/assets/80a27fb0-86c7-46be-a9bf-a101c0c5218a" />
+
 
 ---
 
@@ -172,7 +176,8 @@ The supervisor terminal (left) shows `[PRODUCER]`, `[BUFFER PUSH]`, and `[CONSUM
 
 A `start` command is issued from a separate client process. The supervisor receives the request over the UNIX domain socket control channel, spawns the container, and returns a confirmation. The `ps` command immediately reflects the new container in the metadata table.
 
-![CLI command and supervisor IPC response](4.png)
+<img width="2155" height="266" alt="4" src="https://github.com/user-attachments/assets/5c4ab53a-f0af-42bb-addf-42e2fbeb96f1" />
+
 
 ---
 
@@ -182,11 +187,13 @@ A `start` command is issued from a separate client process. The supervisor recei
 
 **Hard-limit (20 MiB):** The supervisor terminal prints `[HARD LIMIT] container=soft-test exceeded hard limit -> killing` followed by `[KILLED]`. The `engine ps` output shows the container state updated to `hard_limit_killed`.
 
-![Soft and hard limit enforcement](5and6.png)
+<img width="2155" height="448" alt="5and6" src="https://github.com/user-attachments/assets/19d6cbe7-8f63-42bb-af53-58aa68c381c9" />
+
 
 A second run confirming both soft and hard limit `dmesg` lines and `ps` reflecting `hard_limit_killed`:
 
-![Hard limit kill confirmed in ps](6.png)
+<img width="2155" height="459" alt="6" src="https://github.com/user-attachments/assets/44f6d7b8-e73b-4ea3-af6a-8f2db6050fe2" />
+
 
 ---
 
@@ -194,9 +201,11 @@ A second run confirming both soft and hard limit `dmesg` lines and `ps` reflecti
 
 Two CPU-bound containers (`high_pri` with `--nice -20`, `low_pri` with `--nice 19`) run simultaneously on the same core. The `top` snapshot shows the priority (NI) column and the resulting CPU share split. The second screenshot shows `top -b -n 2 -p <pids>` sampled twice, revealing that the high-priority container consistently receives a larger CPU share while the low-priority one is throttled.
 
-![Scheduling experiment - top output](7.png)
+<img width="2155" height="448" alt="7" src="https://github.com/user-attachments/assets/b74852d2-dc7c-4497-aecb-9f62be7151bd" />
 
-![Scheduling experiment - top batch output](7-1.png)
+
+<img width="2155" height="642" alt="7-1" src="https://github.com/user-attachments/assets/4ff96a48-c515-4adb-bfe9-f95559e6431f" />
+
 
 ---
 
@@ -204,9 +213,11 @@ Two CPU-bound containers (`high_pri` with `--nice -20`, `low_pri` with `--nice 1
 
 After the supervisor receives `SIGTERM` (via `Ctrl-C`), `ps aux | grep engine` returns no engine supervisor process. `ps aux | grep -i defunct` returns nothing, confirming zero zombie processes. `ls /tmp/mini_runtime.sock` confirms the control socket was removed. The supervisor terminal shows all containers were reaped before exit.
 
-![Clean teardown - no zombies, socket removed](8-1.png)
+<img width="2146" height="450" alt="8-1" src="https://github.com/user-attachments/assets/b71259af-25ee-45e9-a086-c97f8c9dab15" />
 
-![Clean teardown - supervisor terminal](8-2.png)
+
+<img width="1040" height="459" alt="8-2" src="https://github.com/user-attachments/assets/4fe7f9fc-e39c-4da5-8371-60de4f5b8a13" />
+
 
 ---
 
